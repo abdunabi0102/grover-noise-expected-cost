@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite it as below."
+title: "Expected query cost of Grover search under noise: code and data"
+version: 1.0.0
+date-released: 2026-10-29
+license: MIT
+authors:
+  - family-names: Mukhamadiyev
+    given-names: Abdinabi
+  - family-names: Toirov
+    given-names: Shuhrat
+  - family-names: Saydirasulov
+    given-names: Norqobil
+  - family-names: Turimov
+    given-names: Dilmurod
+  - family-names: Abdurakhimov
+    given-names: Sukhbat

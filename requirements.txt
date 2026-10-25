@@ -1,0 +1,7 @@
+qiskit==2.6.1
+qiskit-aer==0.18.0
+qiskit-ibm-runtime==0.51.0
+numpy==2.5.3
+scipy==1.18.1
+pandas
+matplotlib

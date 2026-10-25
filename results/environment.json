@@ -1,0 +1,18 @@
+{
+ "python": "3.13.17",
+ "qiskit": "2.6.1",
+ "aer": "0.18.0",
+ "ibm_runtime": "0.51.0",
+ "numpy": "2.5.3",
+ "scipy": "1.18.1",
+ "shots": 8192,
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "mode": "v-chain",
+ "quick": false
+}
