@@ -7,7 +7,7 @@ Code and data for the article *"Expected Query Cost of Grover Search under Per-I
 |---|---|---|
 | `scripts/verify_numbers.py` | Closed-form values, bounds and limits (Tables 1–6) and the 128-dimensional statevector cross-check | Sections 4–5 |
 | `notebooks/NB1_grover_noise_E1-E4.ipynb` | Grover circuits (n = 2–7), compiled resources, noisy simulation on FakeSherbrooke / FakeTorino / FakeFez, λ_eff fits, expected cost and speedup | Sections 6.1–6.4, Tables 7–10, Fig. 6 |
-| `notebooks/NB2_local_noise_baselines_E5-E8.ipynb` | Two-parameter predictions, controlled local noise, baselines (classical, Grover at R_opt, BBHT), misspecified λ, all figures | Sections 6.4–6.7, Tables 10–12, Figs. 1–8 |
+| `notebooks/NB2_local_noise_baselines_E5-E8.ipynb` | Two-parameter predictions, held-out model check (`e4c_heldout.csv`), controlled local noise, baselines (classical, Grover at R_opt, BBHT), misspecified λ, all figures | Sections 6.4–6.7, Tables 10–12, Figs. 1–8, Appendix A |
 | `scripts/grover_lib.py` | Shared functions (also embedded in the notebooks) | — |
 | `results/` | Output CSV files, figures and `environment.json` of the Kaggle run reported in the paper (Python 3.13.15, NumPy 2.1.3, SciPy 1.16.3) | all |
 | `manuscript_build/` | Scripts that turn the CSV files into the manuscript tables | — |
