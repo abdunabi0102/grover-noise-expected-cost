@@ -5,7 +5,7 @@ from docx.shared import Pt, RGBColor, Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 FIGDIR = "../results"
-NEWREF = {"rosmanis23", "rosmanis24", "stoudenmire", "leng", "sahar", "menu", "dowarah", "abughanem", "qiskit"}
+NEWREF = {"cohn", "vrana", "gawron", "pokharel", "wangkorepin", "rosmanis23", "rosmanis24", "stoudenmire", "leng", "sahar", "menu", "dowarah", "abughanem", "qiskit"}
 REFS = {
  "feynman": "Feynman, R.P. Simulating physics with computers. *Int. J. Theor. Phys.* **1982**, *21*, 467–488. https://doi.org/10.1007/BF02650179.",
  "aaronson": "Aaronson, S. *Quantum Computing since Democritus*; Cambridge University Press: Cambridge, UK, 2013.",
@@ -14,7 +14,7 @@ REFS = {
  "grover": "Grover, L.K. A fast quantum mechanical algorithm for database search. In Proceedings of the 28th Annual ACM Symposium on Theory of Computing, Philadelphia, PA, USA, 22–24 May 1996; pp. 212–219. https://doi.org/10.1145/237814.237866.",
  "bhmt": "Brassard, G.; Høyer, P.; Mosca, M.; Tapp, A. Quantum amplitude amplification and estimation. *Contemp. Math.* **2002**, *305*, 53–74. https://doi.org/10.1090/conm/305/05215.",
  "cleve": "Cleve, R.; Ekert, A.; Macchiavello, C.; Mosca, M. Quantum algorithms revisited. *Proc. R. Soc. Lond. A* **1998**, *454*, 339–354. https://doi.org/10.1098/rspa.1998.0164.",
- "bbht": "Boyer, M.; Brassard, G.; Høyer, P.; Tapp, A. Tight bounds on quantum searching. *Fortschr. Phys.* **1998**, *46*, 493–505.{! [VERIFY: add DOI]!}",
+ "bbht": "Boyer, M.; Brassard, G.; Høyer, P.; Tapp, A. Tight bounds on quantum searching. *Fortschr. Phys.* **1998**, *46*, 493–505; arXiv:quant-ph/9605034.",
  "zalka": "Zalka, C. Grover’s quantum searching algorithm is optimal. *Phys. Rev. A* **1999**, *60*, 2746–2751. https://doi.org/10.1103/PhysRevA.60.2746.",
  "beals": "Beals, R.; Buhrman, H.; Cleve, R.; Mosca, M.; de Wolf, R. Quantum lower bounds by polynomials. *J. ACM* **2001**, *48*, 778–797. https://doi.org/10.1145/502090.502097.",
  "bbbv": "Bennett, C.H.; Bernstein, E.; Brassard, G.; Vazirani, U. Strengths and weaknesses of quantum computing. *SIAM J. Comput.* **1997**, *26*, 1510–1523. https://doi.org/10.1137/S0097539796300933.",
@@ -26,21 +26,26 @@ REFS = {
  "pablo": "Pablo-Norman, B.; Ruiz-Altaba, M. Noise in Grover’s quantum search algorithm. *Phys. Rev. A* **1999**, *61*, 012301. https://doi.org/10.1103/PhysRevA.61.012301.",
  "long00": "Long, G.L.; Li, Y.S.; Zhang, W.L.; Tu, C.C. Dominant gate imperfection in Grover’s quantum search algorithm. *Phys. Rev. A* **2000**, *61*, 042305. https://doi.org/10.1103/PhysRevA.61.042305.",
  "shenvi": "Shenvi, N.; Brown, K.R.; Whaley, K.B. Effects of a random noisy oracle on search algorithm complexity. *Phys. Rev. A* **2003**, *68*, 052313. https://doi.org/10.1103/PhysRevA.68.052313.",
- "regev": "Regev, O.; Schiff, L. Impossibility of a quantum speed-up with a faulty oracle. In *Automata, Languages and Programming (ICALP 2008)*; Lecture Notes in Computer Science, Vol. 5125; Springer: Berlin/Heidelberg, Germany, 2008; pp. 773–781.{! [VERIFY: add DOI]!}",
+ "regev": "Regev, O.; Schiff, L. Impossibility of a quantum speed-up with a faulty oracle. In *Automata, Languages and Programming (ICALP 2008)*; Lecture Notes in Computer Science, Vol. 5125; Springer: Berlin/Heidelberg, Germany, 2008; pp. 773–781; arXiv:1202.1027.",
  "rosmanis23": "Rosmanis, A. Quantum search with noisy oracle. *arXiv* **2023**, arXiv:2309.14944.",
  "rosmanis24": "Rosmanis, A. Addendum to “Quantum search with noisy oracle”. *arXiv* **2024**, arXiv:2405.11973.",
- "stoudenmire": "Stoudenmire, E.M.; Waintal, X. Opening the black box inside Grover’s algorithm. *Phys. Rev. X* **2024**{! [VERIFY: volume, article number, DOI]!}; arXiv:2303.11317.",
+ "stoudenmire": "Stoudenmire, E.M.; Waintal, X. Opening the black box inside Grover’s algorithm. *Phys. Rev. X* **2024**, *14*, 041029. https://doi.org/10.1103/PhysRevX.14.041029.",
  "leng": "Leng, J.; Yang, F.; Wang, X.-B. Noise-tolerant Grover’s algorithm via success-probability prediction. *Phys. Rev. Res.* **2025**, *7*, L012017. https://doi.org/10.1103/PhysRevResearch.7.L012017.",
  "sahar": "Saha Roy, A.; Lacalle, J. Effect of isotropic errors on the complexity of Grover’s algorithm. *arXiv* **2026**, arXiv:2606.04817.",
  "menu": "Menu, R.; Schachenmayer, J. Efficiency of classical simulations of a noisy Grover algorithm. *arXiv* **2026**, arXiv:2602.17569.",
- "dowarah": "Dowarah, S.; Zhang, C.; Khemani, V.; Kolodrubetz, M. Phases and phase transition in Grover’s algorithm with systematic noise. *arXiv* **2024**, arXiv:2406.10344.{! [VERIFY: journal version]!}",
+ "dowarah": "Dowarah, S.; Zhang, C.; Khemani, V.; Kolodrubetz, M. Phases and phase transition in Grover’s algorithm with systematic noise. *arXiv* **2024**, arXiv:2406.10344.",
  "abughanem": "AbuGhanem, M. Characterizing Grover search algorithm on large-scale superconducting quantum computers. *Sci. Rep.* **2025**, *15*, 1281. https://doi.org/10.1038/s41598-024-80188-6.",
+ "cohn": "Cohn, I.; Fonseca de Oliveira, A.L.; Buksman, E.; García López de Lacalle, J. Grover’s search with local and total depolarizing channel errors: Complexity analysis. *Int. J. Quantum Inf.* **2016**, *14*, {! [VERIFY: article number and DOI]!}; arXiv:1508.03302.",
+ "vrana": "Vrana, P.; Reeb, D.; Reitzner, D.; Wolf, M.M. Fault-ignorant quantum search. *New J. Phys.* **2014**, *16*, 073033. https://doi.org/10.1088/1367-2630/16/7/073033.",
+ "gawron": "Gawron, P.; Klamka, J.; Winiarczyk, R. Noise effects in the quantum search algorithm from the viewpoint of computational complexity. *Int. J. Appl. Math. Comput. Sci.* **2012**, *22*, 493–499. https://doi.org/10.2478/v10006-012-0037-2.",
+ "pokharel": "Pokharel, B.; Lidar, D.A. Better-than-classical Grover search via quantum error detection and suppression. *npj Quantum Inf.* **2024**, *10*, 23. https://doi.org/10.1038/s41534-023-00794-6.",
+ "wangkorepin": "Wang, Z.; Zhang, K.; Korepin, V. Near-deterministic quantum search algorithm without phase design. *Adv. Quantum Technol.* **2025**, *8*, 2400557. https://doi.org/10.1002/qute.202400557.",
  "long01": "Long, G.L. Grover algorithm with zero theoretical failure rate. *Phys. Rev. A* **2001**, *64*, 022307. https://doi.org/10.1103/PhysRevA.64.022307.",
- "toirov24": "Toirov, Sh.A.; Mingboyev, U.X.; Parmonov, A.A.; Kudratov, R.B. Designing Grover’s quantum searching algorithm for 2-qubit and 3-qubit states of quantum systems. In Proceedings of the III International Scientific and Practical Conference “Technologies, Materials Science and Engineering”, *AIP Conf. Proc.* **2024**, *3243*, 010001.{! [VERIFY: article number/DOI]!}",
- "toirov21": "Toirov, Sh.; Narmuradov, U. Processes of applying of quantum genetic algorithm in function optimization. *AIP Conf. Proc.* **2021**, *2365*, 1.{! [VERIFY: article number/DOI]!}",
+ "toirov24": "Toirov, Sh.A.; Mingboyev, U.X.; Parmonov, A.A.; Kudratov, R.B. Designing Grover’s quantum searching algorithm for 2-qubit and 3-qubit states of quantum systems. In Proceedings of the III International Scientific and Practical Conference “Technologies, Materials Science and Engineering”, *AIP Conf. Proc.* **2024**, *3243*, 020047. https://doi.org/10.1063/5.0247564.",
+ "toirov21": "Toirov, Sh.; Narmuradov, U. Processes of applying of quantum genetic algorithm in function optimization. *AIP Conf. Proc.* **2021**, *2365*, 030002. https://doi.org/10.1063/5.0057346.",
  "nc": "Nielsen, M.A.; Chuang, I.L. *Quantum Computation and Quantum Information*, 10th Anniversary ed.; Cambridge University Press: Cambridge, UK, 2010. https://doi.org/10.1017/CBO9780511976667.",
  "barenco": "Barenco, A.; Bennett, C.H.; Cleve, R.; DiVincenzo, D.P.; Margolus, N.; Shor, P.; Sleator, T.; Smolin, J.A.; Weinfurter, H. Elementary gates for quantum computation. *Phys. Rev. A* **1995**, *52*, 3457–3467. https://doi.org/10.1103/PhysRevA.52.3457.",
- "qiskit": "Javadi-Abhari, A.; et al. Quantum computing with Qiskit. *arXiv* **2024**, arXiv:2405.08810.{! [VERIFY: full author list per MDPI style]!}",
+ "qiskit": "Javadi-Abhari, A.; Treinish, M.; Krsulich, K.; Wood, C.J.; Lishman, J.; Gacon, J.; Martiel, S.; Nation, P.D.; Bishop, L.S.; Cross, A.W.; et al. Quantum computing with Qiskit. *arXiv* **2024**, arXiv:2405.08810.",
  "qaoa": "Farhi, E.; Goldstone, J.; Gutmann, S. A quantum approximate optimization algorithm. *arXiv* **2014**, arXiv:1411.4028.",
 }
 
@@ -51,7 +56,7 @@ def esc_outside_math(t):
 def build(marked=True):
     s = open("ms_src.md").read()
     T = json.load(open("tables.json"))
-    for k in ["T7", "T7b", "T8", "T9", "T10", "T11"]:
+    for k in ["T7", "T7b", "T8", "T9", "T10", "T11", "TA2", "TA3"]:
         s = s.replace("{{" + k + "}}", T[k])
     s = s.replace("FIGDIR", FIGDIR)
     # citations in order of first appearance

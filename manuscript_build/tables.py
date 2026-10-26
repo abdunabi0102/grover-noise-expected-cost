@@ -27,12 +27,12 @@ for n in range(2,8):
 out["T7b"]="\n".join(rows)
 # Table 8: lambda fits
 fits=pd.read_csv(R+"e3_fits.csv")
-rows=["| n | "+" | ".join(f"{S_[b]}: λ~eff~ [95% CI]" for b in B)+" | "+" | ".join(f"{S_[b]}: A" for b in B)+" |","|"+"---|"*7]
+rows=["| n | "+" | ".join(f"{S_[b]}: λ~eff~ [95% CI]" for b in B)+" | "+" | ".join(f"{S_[b]}: A (λ~2p~)" for b in B)+" |","|"+"---|"*7]
 for n in range(2,8):
     c=[];a=[]
     for b in B:
         r=fits[(fits.backend==b)&(fits.n==n)].iloc[0]
-        c.append(f"{r.lam_1p:.3f} [{r.lam_lo:.3f}, {r.lam_hi:.3f}]"); a.append(f"{r.A_2p:.2f}")
+        c.append(f"{r.lam_1p:.3f} [{r.lam_lo:.3f}, {r.lam_hi:.3f}]"); a.append(f"{r.A_2p:.2f} ({r.lam_2p:.3f})")
     rows.append(f"| {n} | "+" | ".join(c)+" | "+" | ".join(a)+" |")
 out["T8"]="\n".join(rows)
 # Table 9: predictions
@@ -69,3 +69,18 @@ out["count"]=dict(k1p=int((p.kC_pred_1p==p.kC_emp).sum()),k2p=int((p.kC_pred_2p=
  heldout_vs_best=((e6[e6.strategy=='ours_heldout'].set_index(['backend','n']).exp_queries/e6[e6.strategy=='best_k_insample'].set_index(['backend','n']).exp_queries)-1).max())
 import json; json.dump(out,open("tables.json","w"),indent=1,default=float)
 for k,v in out.items(): print(k); print(v); print()
+
+# ---- Stage-8 additions ----
+reg=pd.read_csv(R+"e4d_regret_splits.csv")
+lab={"1p":"Model 1p, fitted on training seeds","2p":"Model 2p, fitted on training seeds","cal":"Calibration only, Eq. (31) (no Grover data)","emp_train":"Empirical best $k$ on training seeds","k=1":"Always $k=1$","R_opt":"Always $k=R_{\\mathrm{opt}}$"}
+rows=["| Selection rule | Mean excess cost | Median | 90th percentile | Maximum | Exact optimum |","|---|---|---|---|---|---|"]
+for r in ["1p","emp_train","cal","2p","k=1","R_opt"]:
+    x=reg[reg.rule==r]; m=(x.k==x.k_best_test).mean()
+    rows.append(f"| {lab[r]} | {100*x.regret.mean():.1f}% | {100*x.regret.median():.1f}% | {100*x.regret.quantile(0.9):.1f}% | {100*x.regret.max():.0f}% | {100*m:.0f}% |")
+out["TA2"]="\n".join(rows)
+co=pd.read_csv(R+"e9_coherent.csv")
+rows=["| n | ε (rad) | λ~eff~ | k̂\\*~C~ | k\\*~C~ (1p) | Ŝ | S (1p) |","|---|---|---|---|---|---|---|"]
+for _,r in co.iterrows():
+    rows.append(f"| {int(r.n)} | {r.eps:.2f} | {r.lam_1p:.3f} | {int(r.k_emp)} | {int(r.k_1p)} | {r.S_emp:.2f} | {r.S_1p:.2f} |")
+out["TA3"]="\n".join(rows)
+json.dump(out,open("tables.json","w"),indent=1,default=float)
