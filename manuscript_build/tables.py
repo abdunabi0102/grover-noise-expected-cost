@@ -1,5 +1,5 @@
 import pandas as pd, numpy as np
-R="/home/claude/nb/full/results/"
+R="../results/"
 B=["FakeSherbrooke","FakeTorino","FakeFez"]
 S_={"FakeSherbrooke":"Sherbrooke","FakeTorino":"Torino","FakeFez":"Fez"}
 def f(x,d=3): return f"{x:.{d}f}"

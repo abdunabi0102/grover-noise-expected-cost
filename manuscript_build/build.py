@@ -4,7 +4,7 @@ from docx import Document
 from docx.shared import Pt, RGBColor, Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-FIGDIR = "/home/claude/nb/full/results"
+FIGDIR = "../results"
 NEWREF = {"rosmanis23", "rosmanis24", "stoudenmire", "leng", "sahar", "menu", "dowarah", "abughanem", "qiskit"}
 REFS = {
  "feynman": "Feynman, R.P. Simulating physics with computers. *Int. J. Theor. Phys.* **1982**, *21*, 467–488. https://doi.org/10.1007/BF02650179.",
