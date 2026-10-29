@@ -79,7 +79,7 @@ def build(marked=True):
     T = json.load(open("tables.json"))
     for k in ["T7", "T7b", "T8", "T9", "T10", "T11", "T12", "TA2", "TA3", "TA4"]:
         s = s.replace("{{" + k + "}}", T[k])
-    s = s.replace("FIGDIR", FIGDIR).replace("HWDIR", "/home/claude/hw/results_hw")
+    s = s.replace("FIGDIR", FIGDIR).replace("HWDIR", "/home/claude/hw")
     # citations in order of first appearance
     order = []
     def cite(m):

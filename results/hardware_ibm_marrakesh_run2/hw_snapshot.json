@@ -1,0 +1,11 @@
+{
+ "backend": "ibm_marrakesh",
+ "utc": "2026-10-29T02:35:56.696952",
+ "mode": "submit",
+ "run_tag": "run2",
+ "seeds_transpiler": [
+  0,
+  1
+ ],
+ "shots": 4096
+}

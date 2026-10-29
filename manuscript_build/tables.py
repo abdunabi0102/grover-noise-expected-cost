@@ -85,17 +85,20 @@ for _,r in co.iterrows():
 out["TA3"]="\n".join(rows)
 json.dump(out,open("tables.json","w"),indent=1,default=float)
 
-# ---- Stage-9 (QIP) additions: hardware run (E10) and Vrana baselines (E11) ----
-HW="/home/claude/hw/results_hw/"
-hs=pd.read_csv(HW+"hw_summary.csv"); hr=pd.read_csv(HW+"hw_rules.csv"); res=pd.read_csv(HW+"hw_resources.csv")
+# ---- Stage-9 (QIP) additions: hardware runs (E10) and Vrana baselines (E11) ----
 from math import asin
-rows=["| n | Depth / 2q gates at k=R~opt~ | λ~cal~ | λ~eff~ (1p) | A (2p) | k̂\\*~C~ | k\\*~C~ (1p) | Ŝ (95% CI) | S (1p) | Ŝ (sim.) | Regret: k=1 | Regret: R~opt~ |","|---|---|---|---|---|---|---|---|---|---|---|---|"]
-for n in [2,3,4,5]:
-    N=2**n; Ro=round(pi/(4*asin(N**-0.5))-0.5)
-    h=hs[(hs.source=="hardware")&(hs.n==n)].iloc[0]; s=hs[(hs.source=="simulation")&(hs.n==n)].iloc[0]
-    rr=res[(res.n==n)&(res.k==Ro)].iloc[0]
-    g=lambda rule: hr[(hr.n==n)&(hr.rule==rule)].regret.item()
-    rows.append(f"| {n} | {int(rr.depth)} / {int(rr.n_2q)} | {h.lam_cal:.3f} | {h.lam_1p:.3f} | {h.A_2p:.2f} | {int(h.k_emp)} | {int(h.k_1p)} | {h.S_hat:.2f} [{h.S_lo:.2f}, {h.S_hi:.2f}] | {h.S_1p:.2f} | {s.S_hat:.2f} | {100*g('k=1'):.0f}% | {100*g('R_opt'):.0f}% |")
+RUNS=[("ibm_fez","/home/claude/hw/results_hw/"),("ibm_marrakesh","/home/claude/hw/results_hw_run2/")]
+rows=["| Processor | n | Depth / 2q gates at k=R~opt~ | λ~cal~ | λ~eff~ (1p) | A (2p) | k̂\\*~C~ | k\\*~C~ (1p) | Ŝ (95% CI) | S (1p) | Ŝ (sim.) | Regret: k=1 | Regret: R~opt~ |","|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+for dev,HW in RUNS:
+    hs=pd.read_csv(HW+"hw_summary.csv"); hr=pd.read_csv(HW+"hw_rules.csv"); res=pd.read_csv(HW+"hw_resources.csv")
+    for n in [2,3,4,5]:
+        N=2**n; Ro=round(pi/(4*asin(N**-0.5))-0.5)
+        h=hs[(hs.source=="hardware")&(hs.n==n)].iloc[0]; s=hs[(hs.source=="simulation")&(hs.n==n)].iloc[0]
+        rr=res[(res.n==n)&(res.k==Ro)]
+        d0,d1,q0,q1=int(rr.depth.min()),int(rr.depth.max()),int(rr.n_2q.min()),int(rr.n_2q.max())
+        dq=f"{d0} / {q0}" if (d0==d1 and q0==q1) else f"{d0}–{d1} / {q0}–{q1}"
+        g=lambda rule: hr[(hr.n==n)&(hr.rule==rule)].regret.item()
+        rows.append(f"| {dev} | {n} | {dq} | {h.lam_cal:.3f} | {h.lam_1p:.3f} | {h.A_2p:.2f} | {int(h.k_emp)} | {int(h.k_1p)} | {h.S_hat:.2f} [{h.S_lo:.2f}, {h.S_hi:.2f}] | {h.S_1p:.2f} | {s.S_hat:.2f} | {100*g('k=1'):.0f}% | {100*g('R_opt'):.0f}% |")
 out["T12"]="\n".join(rows)
 v=pd.read_csv(R+"e11_vrana.csv")
 lab={"1p (ours)":"Model 1p, cost-optimal $k$ (this work)","Vrana known-p":"Vrana et al., known-$p$ round length (their Sec. II C)",

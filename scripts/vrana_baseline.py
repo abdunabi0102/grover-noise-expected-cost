@@ -63,6 +63,7 @@ print("k_V == k_1p share:", (d[d.rule == "Vrana known-p"].k.values == d[d.rule =
 try:
     h = pd.read_csv(f"{HW}/hw_counts.csv"); hs = pd.read_csv(f"{HW}/hw_summary.csv"); hr = []
     for n, g in h.groupby("n"):
+        g = g.groupby("k")[["succ", "shots"]].sum().reset_index()  # pool layouts (run 2 has two transpiler seeds)
         N = 2 ** n; ks = g.k.values; P = g.succ.values / g.shots.values; c = (ks + 1) / np.maximum(P, 1e-12); cmin = c.min()
         lam = hs[(hs.source == "hardware") & (hs.n == n)].lam_1p.item(); kg = np.arange(0, ks.max() + 1)
         kv = kV(lam, N, kg); Pd = dict(zip(ks, P))
