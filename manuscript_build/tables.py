@@ -1,5 +1,5 @@
 import pandas as pd, numpy as np
-R="../results/"
+R="/home/claude/kaggle/merged/"
 B=["FakeSherbrooke","FakeTorino","FakeFez"]
 S_={"FakeSherbrooke":"Sherbrooke","FakeTorino":"Torino","FakeFez":"Fez"}
 def f(x,d=3): return f"{x:.{d}f}"
@@ -84,3 +84,27 @@ for _,r in co.iterrows():
     rows.append(f"| {int(r.n)} | {r.eps:.2f} | {r.lam_1p:.3f} | {int(r.k_emp)} | {int(r.k_1p)} | {r.S_emp:.2f} | {r.S_1p:.2f} |")
 out["TA3"]="\n".join(rows)
 json.dump(out,open("tables.json","w"),indent=1,default=float)
+
+# ---- Stage-9 (QIP) additions: hardware run (E10) and Vrana baselines (E11) ----
+HW="/home/claude/hw/results_hw/"
+hs=pd.read_csv(HW+"hw_summary.csv"); hr=pd.read_csv(HW+"hw_rules.csv"); res=pd.read_csv(HW+"hw_resources.csv")
+from math import asin
+rows=["| n | Depth / 2q gates at k=R~opt~ | λ~cal~ | λ~eff~ (1p) | A (2p) | k̂\\*~C~ | k\\*~C~ (1p) | Ŝ (95% CI) | S (1p) | Ŝ (sim.) | Regret: k=1 | Regret: R~opt~ |","|---|---|---|---|---|---|---|---|---|---|---|---|"]
+for n in [2,3,4,5]:
+    N=2**n; Ro=round(pi/(4*asin(N**-0.5))-0.5)
+    h=hs[(hs.source=="hardware")&(hs.n==n)].iloc[0]; s=hs[(hs.source=="simulation")&(hs.n==n)].iloc[0]
+    rr=res[(res.n==n)&(res.k==Ro)].iloc[0]
+    g=lambda rule: hr[(hr.n==n)&(hr.rule==rule)].regret.item()
+    rows.append(f"| {n} | {int(rr.depth)} / {int(rr.n_2q)} | {h.lam_cal:.3f} | {h.lam_1p:.3f} | {h.A_2p:.2f} | {int(h.k_emp)} | {int(h.k_1p)} | {h.S_hat:.2f} [{h.S_lo:.2f}, {h.S_hi:.2f}] | {h.S_1p:.2f} | {s.S_hat:.2f} | {100*g('k=1'):.0f}% | {100*g('R_opt'):.0f}% |")
+out["T12"]="\n".join(rows)
+v=pd.read_csv(R+"e11_vrana.csv")
+lab={"1p (ours)":"Model 1p, cost-optimal $k$ (this work)","Vrana known-p":"Vrana et al., known-$p$ round length (their Sec. II C)",
+     "Vrana Alg.1 eps=0.1":"Vrana et al., fault-ignorant Algorithm 1, $\\varepsilon=0.1$","Vrana Alg.1 eps=0.01":"Vrana et al., fault-ignorant Algorithm 1, $\\varepsilon=0.01$",
+     "Vrana Alg.1 eps=0.001":"Vrana et al., fault-ignorant Algorithm 1, $\\varepsilon=0.001$","R_opt":"Always $k=R_{\\mathrm{opt}}$"}
+rows=["| Strategy | Mean excess cost | Median | Maximum | Evaluations worse than classical (of 180) |","|---|---|---|---|---|"]
+for r in lab:
+    x=v[v.rule==r]
+    rows.append(f"| {lab[r]} | {100*x.regret.mean():.1f}% | {100*x.regret.median():.1f}% | {100*x.regret.max():.0f}% | {int((x.vs_classical>1).sum())} |")
+out["TA4"]="\n".join(rows)
+json.dump(out,open("tables.json","w"),indent=1,default=float)
+print(out["T12"]); print(out["TA4"])

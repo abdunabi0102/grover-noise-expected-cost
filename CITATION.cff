@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this code or data, please cite it as below."
 title: "Expected query cost of Grover search under noise: code and data"
-version: 2.2.0
-date-released: 2026-10-26
+version: 2.3.0
+date-released: 2026-10-29
 license: MIT
 authors:
   - family-names: Mukhamadiyev
